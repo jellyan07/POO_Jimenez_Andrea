@@ -13,6 +13,8 @@ public class UI {
         output.println("4. Listar Usuarios");
         output.println("5. Agendar Cita");
         output.println("6. Agendar Reservación");
+        output.println("7. Listar Reservaciones");
+        output.println("8. Listar Citas");
         output.println("7. Salir");
         output.println("Ingrese su opción -->");
     }

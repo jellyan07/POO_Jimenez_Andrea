@@ -14,10 +14,26 @@ public class Logica {
     private static PrintStream output = new PrintStream(System.out);
 
     public void procesarOpcion(int opcion) {
+
         switch (opcion) {
             case 1:
-                output.println("Nombre de la mascota");
-                String nombre = input.next();
+                boolean nombre_repetido = true;
+                String nombre = "";
+                do {
+                    output.println("Nombre de la mascota");
+                    String nombre_input = input.next();
+
+                    for (int i= 0; i < arregloMascotas.length; i++) {
+                        if (arregloMascotas[i].getNombre() == nombre_input) {
+                            output.println("*** Ese nombre está repetido ***");
+                            break;
+                        } else {
+                            nombre_repetido = false;
+                            nombre = nombre_input;
+                        }
+                    }
+                } while (nombre_repetido = true);
+
                 output.println("Observaciones");
                 String observaciones = input.next();
                 output.println("Ranking de la mascota");
@@ -39,6 +55,7 @@ public class Logica {
                 Duenno nuevo = new Duenno(nombre_duenno,apellido1,apellido2,cedula,numero,direccion);
 
                 Mascota nueva = new Mascota(nombre, observaciones, ranking, nuevo);
+
                 arregloMascotas[nextPosicion++] = nueva;
                 break;
             case 2:
@@ -49,14 +66,41 @@ public class Logica {
                 }
                 break;
             case 3:
+
                 output.println("Ingrese el nombre del usuario");
                 String nombre_u = input.next();
                 output.println("Ingrese el primer apellido del usuario");
                 String apellido1u = input.next();
                 output.println("Ingrese el segundo apellido del usuario");
                 String apellido2u = input.next();
-                output.println("Cédula del usuario");
-                int cedula_u = input.nextInt();
+
+                /* Verificar que la cedula no se repita */
+
+                boolean usuario_repetido = false;
+                int cedula_u = 0;
+                do {
+                    output.println("Cédula del usuario");
+                    int cedula_input = input.nextInt();
+
+                    for (int i= 0; i < arregloUsuarios.length; i++)
+                        if (arregloUsuarios[i] != null) {
+                            if (arregloUsuarios[i].getCedula() == cedula_input) {
+                                output.println("*** Esta cédula pertenece a un usuario en el sistema ***");
+                                usuario_repetido = true;
+                                break;
+                            } else {
+                                cedula_u = cedula_input;
+                                usuario_repetido = false;
+                            }
+                        } else {
+                            usuario_repetido = false;
+                            cedula_u = cedula_input;
+                            break;
+                        }
+
+                } while (usuario_repetido);
+
+
                 output.println("Ingrese el número telefónico del usuario (sin guión)");
                 int numero_u = input.nextInt();
                 output.println("Ingrese la dirección de residencia");
@@ -150,7 +194,7 @@ public class Logica {
                             }
                         }
 
-                } while (match==true);
+                } while (!match);
 
                 Cita reservar = new Cita(fecha_cita, mascota_cita, usuario_cita);
                 arregloCitas[nextPosicion_C] = reservar;
@@ -187,13 +231,13 @@ public class Logica {
                     // Lee la mascota y verifica que sea una registrada
 
                     mascota_input = input.next();
-                    for (int i = 0; i < arregloMascotas.length; i++) {
-                        if (mascota_input == arregloMascotas[i].getNombre()) {
+                    for (Mascota arregloMascota : arregloMascotas) {
+                        if (mascota_input == arregloMascota.getNombre()) {
                             match = true;
-                            mascota_cita = arregloMascotas[i];
+                            mascota_cita = arregloMascota;
                         }
                     }
-                } while (match == false);
+                } while (!match);
 
                 // Mismo procedimiento para el usuario
 
@@ -227,6 +271,20 @@ public class Logica {
 
                 Reservacion reserva = new Reservacion(fecha_entrada, fecha_salida, mascota_cita, usuario_cita);
                 arregloReservaciones[nextPosicion_R] = reserva;
+                break;
+            case 7:
+                for (int i= 0; i < arregloReservaciones.length; i++) {
+                    if (arregloReservaciones[i] != null) {
+                        output.println(i+1 + ". " + arregloReservaciones[i]);
+                    }
+                }
+                break;
+            case 8:
+                for (int i= 0; i < arregloCitas.length; i++) {
+                    if (arregloCitas[i] != null) {
+                        output.println(i+1 + ". " + arregloCitas[i]);
+                    }
+                }
 
             default:
                 output.println("Opción inválida");

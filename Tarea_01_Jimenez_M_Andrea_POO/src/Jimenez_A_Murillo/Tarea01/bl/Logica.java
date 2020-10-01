@@ -17,22 +17,30 @@ public class Logica {
 
         switch (opcion) {
             case 1:
-                boolean nombre_repetido = true;
+                boolean nombre_repetido = false;
                 String nombre = "";
                 do {
-                    output.println("Nombre de la mascota");
+                    output.println("Cédula del usuario");
                     String nombre_input = input.next();
 
                     for (int i= 0; i < arregloMascotas.length; i++) {
-                        if (arregloMascotas[i].getNombre() == nombre_input) {
-                            output.println("*** Ese nombre está repetido ***");
-                            break;
+                        if (arregloMascotas[i] != null) {
+                            if (arregloMascotas[i].getNombre() == nombre_input) {
+                                output.println("*** Este nombre ya pertenece a una mascota en el sistema ***");
+                                nombre_repetido = true;
+                                break;
+                            } else {
+                                nombre = nombre_input;
+                                nombre_repetido = false;
+                            }
                         } else {
                             nombre_repetido = false;
                             nombre = nombre_input;
+                            break;
                         }
                     }
-                } while (nombre_repetido = true);
+
+                } while (nombre_repetido);
 
                 output.println("Observaciones");
                 String observaciones = input.next();
@@ -82,7 +90,7 @@ public class Logica {
                     output.println("Cédula del usuario");
                     int cedula_input = input.nextInt();
 
-                    for (int i= 0; i < arregloUsuarios.length; i++)
+                    for (int i= 0; i < arregloUsuarios.length; i++) {
                         if (arregloUsuarios[i] != null) {
                             if (arregloUsuarios[i].getCedula() == cedula_input) {
                                 output.println("*** Esta cédula pertenece a un usuario en el sistema ***");
@@ -97,6 +105,7 @@ public class Logica {
                             cedula_u = cedula_input;
                             break;
                         }
+                    }
 
                 } while (usuario_repetido);
 
